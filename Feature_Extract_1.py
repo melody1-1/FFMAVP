@@ -144,7 +144,7 @@ def BLOSUM62(fastas, **kw):
 	return encodings
 
 kw = {'path': r"C:",'order': 'ACDEFGHIKLMNPQRSTVWY'}
-fastas = readFasta(r"./fasta.txt")
+fastas = readFasta("./data/test dataset/firstStage/firstStage_test_121.faa")
 egaac = EGAAC(fastas, 5, **kw)
 blosum62 = BLOSUM62(fastas, **kw)
 
@@ -156,4 +156,4 @@ data_BLOSUM62 = pd.DataFrame(data=data_BLOSUM62)
 
 feature = np.column_stack((data_EGAAC,data_BLOSUM62))
 feature = pd.DataFrame(feature)
-feature.to_csv(r"./feature.csv", header=None, index=False)
+feature.to_csv("./data/test dataset/firstStage/feature.csv", header=None, index=False)
