@@ -5,3 +5,4 @@ Antiviral peptides (AVPs) are widely found in animals and plants, with high spec
 ## How to test sequences？
 1. In the first stage of FFMAVP, we first use Feature_Extract_1 to extract features, then save the file and run main_1.py. You need to import the specified file.
 2. In the second stage of FFMAVP, we first use Feature_Extract_2 to extract features, then save the file and run main_2.py. You need to import the specified file.
+3. The model file needs to be unzipping to the specified folder.
