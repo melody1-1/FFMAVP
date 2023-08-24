@@ -51,19 +51,19 @@ amino_acids = "XACDEFGHIKLMNPQRSTVWY"
 protein_dict = dict((c, i) for i, c in enumerate(amino_acids))
 
 # label_family
-label_family = pd.read_csv("./label_family.csv", header=None)
+label_family = pd.read_csv("./data/test dataset/secondStage/label_family.csv", header=None)
 label_family = np.array(pd.DataFrame(label_family))
 
 # label_virus
-label_virus = pd.read_csv("./label_virus.csv", header=None)
+label_virus = pd.read_csv("./data/test dataset/secondStage/label_virus.csv", header=None)
 label_virus = np.array(pd.DataFrame(label_virus))
 
 # M1
-M1_feature = pd.read_csv("./feature_2.csv", header=None)
+M1_feature = pd.read_csv("./data/test dataset/secondStage/feature.csv", header=None)
 M1_feature = np.array(pd.DataFrame(M1_feature))
 
 # M2
-file = open("./sequence_2.fasta", encoding="utf-8")
+file = open("./data/test dataset/secondStage/secondStage_test.faa", encoding="utf-8")
 all_line = file.readlines()
 fasta = []
 for i in range(len(all_line)):
@@ -92,7 +92,7 @@ for x, y in enumerate(label_family):
 x_test_family_M1 = np.array(x_test_family_M1)
 x_test_family_M2 = np.array(x_test_family_M2)
 [a1, b1] = np.shape(x_test_family_M1)
-scaler = pickle.load(open("./scaler_second.pkl", 'rb'))
+scaler = pickle.load(open("./model/secondStage/scaler_second.pkl", 'rb'))
 x_test_family_M1 = scaler.transform(x_test_family_M1).reshape(a1, b1, -1)
 # label_family
 y_family = np.array(y_test_family)
@@ -111,14 +111,15 @@ for x, y in enumerate(label_virus):
 x_test_virus_M1 = np.array(x_test_virus_M1)
 x_test_virus_M2 = np.array(x_test_virus_M2)
 [a2, b2] = np.shape(x_test_virus_M1)
-scaler = pickle.load(open("./scaler_second.pkl", 'rb'))
+scaler = pickle.load(open("./model/secondStage/scaler_second.pkl", 'rb'))
 x_test_virus_M1 = scaler.transform(x_test_virus_M1).reshape(a2, b2, -1)
 # label_virus
 y_virus = np.array(y_test_virus)
 y_test2 = to_one_hot(y_virus, dimension=8)
 
 
-cv_clf = load_model("./SecondStage_model.h5", custom_objects={'categorical_focal_loss_fixed': categorical_focal_loss_1(gamma=0)})
+cv_clf = load_model("./model/secondStage/SecondStage_model.h5",
+                    custom_objects={'categorical_focal_loss_fixed': categorical_focal_loss_1(gamma=0)})
 
 # ---------------------------------Task 1 Prediction-------------------------------------------
 preds_family = cv_clf.predict([x_test_family_M1, x_test_family_M2])

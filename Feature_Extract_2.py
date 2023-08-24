@@ -166,7 +166,7 @@ def PAAC(fastas, lambdaValue=6, w=0.5, **kw):
 	return encodings
 
 kw = {'path': r"C:",'order': 'ACDEFGHIKLMNPQRSTVWY'}
-fastas = readFasta(r"./data.faa")
+fastas = readFasta(r"./data/test dataset/secondStage/secondStage_test.faa")
 aac = AAC(fastas, **kw)
 cksaap = CKSAAP(fastas, 5, **kw)
 paac = PAAC(fastas, 4, 0.05,  **kw)
@@ -183,4 +183,4 @@ data_PAAC = pd.DataFrame(data=data_PAAC)
 feature = np.column_stack((data_AAC, data_CKSAAP, data_PAAC))
 feature = pd.DataFrame(feature)
 print(feature)
-feature.to_csv(r"./feature.csv", header=None, index=False)
+feature.to_csv(r"./data/test dataset/secondStage/feature.csv", header=None, index=False)

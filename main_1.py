@@ -28,9 +28,8 @@ def calculate_performace(test_num, pred_y, labels):
     sensitivity = float(tp) / (tp + fn)
     specificity = float(tn) / (tn + fp)
     MCC = float(tp * tn - fp * fn) / (np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)))
-    GMean = np.sqrt(sensitivity * specificity)
     F1 = fbeta_score(labels, pred_y, beta=1)
-    return acc, precision, sensitivity, specificity, MCC, GMean, F1
+    return acc, precision, sensitivity, specificity, MCC, F1
 
 def plot_roc_curve(source):
     '''
@@ -84,11 +83,11 @@ amino_acids = "XACDEFGHIKLMNPQRSTVWY"
 protein_dict = dict((c, i) for i, c in enumerate(amino_acids))
 
 # M1
-M1_feature = pd.read_csv("./feature_1", header=None)  # Amino acid features
+M1_feature = pd.read_csv("./data/test dataset/firstStage/feature.csv", header=None)  # Amino acid features
 M1_feature = np.array(pd.DataFrame(M1_feature))
 
 # M2
-file = open("./sequence_1.fasta", encoding="utf-8") # Sequences
+file = open("./data/test dataset/firstStage/firstStage_test.faa", encoding="utf-8") # Sequences
 all_line = file.readlines()
 fasta = []
 for i in range(len(all_line)):
@@ -114,21 +113,21 @@ for val in label:
         real_labels.append(0)
 auc_label = (real_labels,)
 
-scaler = pickle.load(open("./scaler_first.pkl", 'rb'))
+scaler = pickle.load(open("./model/firstStage/scaler_first.pkl", 'rb'))
 [a, b] = np.shape(M1_feature)
 M1_feature = scaler.transform(M1_feature).reshape(a, b, -1)
-cv_clf = load_model("./FirstStage_model.h5")  # model
+cv_clf = load_model("./model/firstStage/FirstStage_model.h5")  # model
 
 
 preds = cv_clf.predict([M1_feature, M2_feature])
 lstm_class = np.rint(preds)
-acc, precision, sensitivity, specificity, MCC, Gmean, F1 = calculate_performace(len(label), lstm_class, label)
+acc, precision, sensitivity, specificity, MCC, F1 = calculate_performace(len(label), lstm_class, label)
 fpr, tpr, _ = roc_curve(label, preds)
 roc_auc = auc(fpr, tpr)
 pre, rec, _ = precision_recall_curve(label, preds)
 aucpr = auc(rec, pre)
-print('GTB:acc=%f,precision=%f,sensitivity=%f,specificity=%f,MCC=%f,GMean=%f,roc=%f,aucpr=%f, F1=%f'
-      % (acc, precision, sensitivity, specificity, MCC, Gmean, roc_auc, aucpr,F1))
+print('GTB:acc=%f,precision=%f,sensitivity=%f,specificity=%f,MCC=%f,roc=%f,aucpr=%f, F1=%f'
+      % (acc, precision, sensitivity, specificity, MCC, roc_auc, aucpr,F1))
 auc_pred = (preds,)
 auc_all = auc_label + auc_pred
 auc_l.append(auc_all)
