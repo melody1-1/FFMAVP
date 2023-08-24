@@ -115,7 +115,7 @@ scaler = pickle.load(open("./model/secondStage/scaler_second.pkl", 'rb'))
 x_test_virus_M1 = scaler.transform(x_test_virus_M1).reshape(a2, b2, -1)
 # label_virus
 y_virus = np.array(y_test_virus)
-y_test2 = to_one_hot(y_virus, dimension=8)
+y_virus = to_one_hot(y_virus, dimension=8)
 
 
 cv_clf = load_model("./model/secondStage/SecondStage_model.h5",
@@ -131,7 +131,7 @@ print('GTB:acc=%f,precision=%f,recall=%f,f1_score=%f' % (acc, precision, recall,
 # ---------------------------------Task 2 Prediction-------------------------------------------
 preds_virus = cv_clf.predict([x_test_virus_M1, x_test_virus_M2])
 preds_virus = preds_virus[1][:, :8]
-acc, precision, recall, f1 = calculate_performace(y_test2, preds_virus)
+acc, precision, recall, f1 = calculate_performace(y_virus, preds_virus)
 print("******************************task2********************************")
 print('GTB:acc=%f,precision=%f,recall=%f,f1_score=%f' % (acc, precision, recall, f1))
 
