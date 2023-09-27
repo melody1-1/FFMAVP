@@ -10,7 +10,6 @@ from keras import backend as K
 import numpy as np
 import pickle
 
-
 def seq_to_num(line, seq_length):
     seq = np.zeros(seq_length)
     for j in range(len(line)):
@@ -31,11 +30,11 @@ def calculate_performace(label, pred_y):
                 pred_y[i][j] = 1
             else:
                 pred_y[i][j] = 0
-    precision = precision_score(label, pred_y, average='macro')
-    recall = recall_score(label, pred_y, average='macro')
-    f1 = f1_score(label, pred_y, average='macro')
-    acc = metrics.accuracy_score(label, pred_y)
-    return acc, precision, recall, f1
+    MacroP = precision_score(label, pred_y, average='macro')
+    MacroR = recall_score(label, pred_y, average='macro')
+    MacroF = f1_score(label, pred_y, average='macro')
+    Accuracy = metrics.accuracy_score(label, pred_y)
+    return Accuracy, MacroP, MacroR, MacroF
 
 def categorical_focal_loss_1(gamma):
     def categorical_focal_loss_fixed(y_true, y_pred):
@@ -117,7 +116,6 @@ x_test_virus_M1 = scaler.transform(x_test_virus_M1).reshape(a2, b2, -1)
 y_virus = np.array(y_test_virus)
 y_virus = to_one_hot(y_virus, dimension=8)
 
-
 cv_clf = load_model("./model/secondStage/SecondStage_model.h5",
                     custom_objects={'categorical_focal_loss_fixed': categorical_focal_loss_1(gamma=0)})
 
@@ -125,20 +123,12 @@ cv_clf = load_model("./model/secondStage/SecondStage_model.h5",
 preds_family = cv_clf.predict([x_test_family_M1, x_test_family_M2])
 preds_family = preds_family[0][:, :6]
 print("******************************task1********************************")
-acc, precision, recall, f1 = calculate_performace(y_family, preds_family)
-print('GTB:acc=%f,precision=%f,recall=%f,f1_score=%f' % (acc, precision, recall, f1))
+Accuracy, MacroP, MacroR, MacroF = calculate_performace(y_family, preds_family)
+print('GTB:Accuracy=%f,MacroP=%f,MacroR=%f,MacroF=%f' % (Accuracy, MacroP, MacroR, MacroF))
 
 # ---------------------------------Task 2 Prediction-------------------------------------------
 preds_virus = cv_clf.predict([x_test_virus_M1, x_test_virus_M2])
 preds_virus = preds_virus[1][:, :8]
-acc, precision, recall, f1 = calculate_performace(y_virus, preds_virus)
+Accuracy, MacroP, MacroR, MacroF = calculate_performace(y_virus, preds_virus)
 print("******************************task2********************************")
-print('GTB:acc=%f,precision=%f,recall=%f,f1_score=%f' % (acc, precision, recall, f1))
-
-
-
-
-
-
-
-
+print('GTB:Accuracy=%f,MacroP=%f,MacroR=%f,MacroF=%f' % (Accuracy, MacroP, MacroR, MacroF))
