@@ -10,6 +10,7 @@ from keras import backend as K
 import numpy as np
 import pickle
 
+
 def seq_to_num(line, seq_length):
     seq = np.zeros(seq_length)
     for j in range(len(line)):
