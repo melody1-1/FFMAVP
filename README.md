@@ -6,4 +6,4 @@ Antiviral peptides (AVPs) are widely found in animals and plants, with high spec
 1. In the first stage of FFMAVP, we first run data_feature_1.py, then run main_1.py. You need to import the specified file.
 2. In the second stage of FFMAVP, we first run data_feature_2.py, then run main_2.py. You need to import the specified file.
 3. The model file needs to be unzipped to the specified folder.
-4. In the first stage of FFMAVP, sequences are supplemented to a certain length using complementary.py
+4. Before running data_feature_1.py, sequences are supplemented to a certain length using complementary.py
