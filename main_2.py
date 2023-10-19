@@ -4,7 +4,6 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, average_precision_score, precision_score, f1_score, recall_score
 from sklearn import metrics
 from tensorflow.keras import backend as K
-from numpy import *
 from keras.models import Sequential, load_model
 from keras import backend as K
 import numpy as np
