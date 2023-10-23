@@ -124,11 +124,11 @@ preds_family = cv_clf.predict([x_test_family_M1, x_test_family_M2])
 preds_family = preds_family[0][:, :6]
 print("******************************task1********************************")
 Accuracy, MacroP, MacroR, MacroF = calculate_performace(y_family, preds_family)
-print('GTB:Accuracy=%f,MacroP=%f,MacroR=%f,MacroF=%f' % (Accuracy, MacroP, MacroR, MacroF))
+print('Accuracy=%f,MacroP=%f,MacroR=%f,MacroF=%f' % (Accuracy, MacroP, MacroR, MacroF))
 
 # ---------------------------------Task 2 Prediction-------------------------------------------
 preds_virus = cv_clf.predict([x_test_virus_M1, x_test_virus_M2])
 preds_virus = preds_virus[1][:, :8]
 Accuracy, MacroP, MacroR, MacroF = calculate_performace(y_virus, preds_virus)
 print("******************************task2********************************")
-print('GTB:Accuracy=%f,MacroP=%f,MacroR=%f,MacroF=%f' % (Accuracy, MacroP, MacroR, MacroF))
+print('Accuracy=%f,MacroP=%f,MacroR=%f,MacroF=%f' % (Accuracy, MacroP, MacroR, MacroF))
