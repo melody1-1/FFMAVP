@@ -75,5 +75,5 @@ fpr, tpr, _ = roc_curve(label, preds)
 AUC = auc(fpr, tpr)
 pre, rec, _ = precision_recall_curve(label, preds)
 AUPR = auc(rec, pre)
-print('GTB:acc=%f,precision=%f,sensitivity=%f,specificity=%f,MCC=%f,AUC=%f,AUPR=%f, F1=%f'
+print('acc=%f,precision=%f,sensitivity=%f,specificity=%f,MCC=%f,AUC=%f,AUPR=%f, F1=%f'
       % (acc, precision, sensitivity, specificity, MCC, AUC, AUPR, F1))
